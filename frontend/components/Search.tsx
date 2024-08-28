@@ -3,7 +3,7 @@ import { Box, Container } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 
 const Search = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

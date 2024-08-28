@@ -49,39 +49,34 @@ const CardGrid = () => {
     }
   };
 
-  useEffect(() => {
-    if (!searchValue?.trim().length) return;
+  //fetch all data
+  const fetchAllCards = async () => {
+    try {
+      const response = await fetch("/api/cards");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setCards(data);
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to fetch cards");
+      setLoading(false);
+      throw err;
+    }
+  };
 
-    handleSearch(searchValue);
+  useEffect(() => {
+    if (searchValue) {
+      handleSearch(searchValue);
+    } else {
+      fetchAllCards();
+    }
   }, [searchValue]);
 
-  //fetch all data
   useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await fetch("/api/cards");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setCards(data);
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to fetch cards");
-        setLoading(false);
-        throw err;
-      }
-    };
-
-    fetchCards();
+    fetchAllCards();
   }, []);
-
-  if (error)
-    return (
-      <Box sx={{ textAlign: "center", py: 4, color: "error.main" }}>
-        {error}
-      </Box>
-    );
 
   return (
     <MainContainer sx={{ py: 10 }}>
@@ -90,7 +85,11 @@ const CardGrid = () => {
           <Typography fontWeight={500}>Loading...</Typography>
         </Stack>
       )}
-
+      {error && (
+        <Stack className="center">
+          <Typography fontWeight={500}>{error}</Typography>
+        </Stack>
+      )}
       <Container gap={10}>
         {cards.map((card) => (
           <Card
