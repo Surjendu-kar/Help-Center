@@ -1,27 +1,44 @@
-import React from "react";
-import { Box } from "@mui/material";
+import { Stack, styled, Typography } from "@mui/material";
+
+const MainContainer = styled(Stack)(({ theme }) => ({
+  width: "450px",
+  height: "200px",
+  background: "white",
+  borderRadius: "10px",
+  border: "1px solid grey",
+  boxShadow: theme.shadows[1],
+}));
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "24px",
+  marginTop: "1rem",
+  padding: theme.spacing(0, 3),
+}));
+const StyledHr = styled("hr")(({ theme }) => ({
+  border: "none",
+  borderTop: "1px solid #e0e0e0",
+  margin: theme.spacing(1, 0),
+  width: "100%",
+}));
+
+const StyledDescription = styled(Typography)(({ theme }) => ({
+  color: "#4B4B4B",
+  padding: theme.spacing(0, 3),
+}));
 
 interface CardProps {
   title: string;
   description: string;
 }
 
-const Card = ({ title, description }: CardProps) => (
-  <Box sx={{ bgcolor: "white", p: 3, borderRadius: 2, boxShadow: 1 }}>
-    <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>{title}</h2>
-    <p style={{ color: "#4B4B4B", marginBottom: "16px" }}>{description}</p>
-    <a
-      href="#"
-      style={{
-        color: "#4C5FD5",
-        textDecoration: "none",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      Learn More <span style={{ marginLeft: "8px" }}>→</span>
-    </a>
-  </Box>
-);
+const Card = ({ title, description }: CardProps) => {
+  return (
+    <MainContainer>
+      <StyledTitle>{title}</StyledTitle>
+      <StyledHr />
+      <StyledDescription>{description}</StyledDescription>
+    </MainContainer>
+  );
+};
 
 export default Card;

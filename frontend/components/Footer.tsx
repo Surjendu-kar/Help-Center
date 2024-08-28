@@ -61,25 +61,11 @@ const Footer: React.FC = () => (
           </Box>
         </Grid>
       </Grid>
-      <Box
-        sx={{
-          mt: 4,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-        }}
-      >
-        <Box
-          component="img"
-          src="/api/placeholder/32/32"
-          alt="Abstract logo"
-          sx={{ width: 32, height: 32, bgcolor: "white", borderRadius: "50%" }}
-        />
-        <Box sx={{ textAlign: "right", fontSize: "0.75rem" }}>
-          <Typography variant="body2">© Copyright 2022</Typography>
-          <Typography variant="body2">Abstract Studio Design, Inc.</Typography>
-          <Typography variant="body2">All rights reserved</Typography>
-        </Box>
+
+      <Box sx={{ textAlign: "right", fontSize: "0.75rem" }}>
+        <Typography variant="body2">© Copyright 2022</Typography>
+        <Typography variant="body2">Abstract Studio Design, Inc.</Typography>
+        <Typography variant="body2">All rights reserved</Typography>
       </Box>
     </Container>
   </Box>

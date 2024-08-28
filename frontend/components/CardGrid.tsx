@@ -1,6 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Box, Container } from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, styled } from "@mui/material";
 import Card from "./Card";
+
+const MainContainer = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const Container = styled(Box)(() => ({
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  alignItems: "center",
+  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+  width: "70%",
+}));
 
 interface CardData {
   _id: string;
@@ -42,14 +57,8 @@ const CardGrid = () => {
     );
 
   return (
-    <Container sx={{ py: 4 }}>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: 4,
-        }}
-      >
+    <MainContainer sx={{ py: 10 }}>
+      <Container gap={10}>
         {cards.map((card) => (
           <Card
             key={card._id}
@@ -57,8 +66,8 @@ const CardGrid = () => {
             description={card.description}
           />
         ))}
-      </Box>
-    </Container>
+      </Container>
+    </MainContainer>
   );
 };
 
