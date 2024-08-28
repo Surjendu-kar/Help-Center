@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
-import { Box, styled } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Stack, styled, Typography } from "@mui/material";
 import Card from "./Card";
+import { useSearchParams } from "react-router-dom";
 
-const MainContainer = styled(Box)(() => ({
-  display: "flex",
+const MainContainer = styled(Stack)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
+  minHeight: theme.spacing(50),
 }));
 
 const Container = styled(Box)(() => ({
@@ -27,7 +28,34 @@ const CardGrid = () => {
   const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const searchValue = searchParams.get("search");
 
+  // handle search
+  const handleSearch = async (query: string) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/cards/${query}`);
+      if (!response.ok) {
+        throw new Error("Card not found");
+      }
+      const data = await response.json();
+      setCards(data);
+    } catch (error) {
+      console.error("Error searching for card:", error);
+      setCards([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!searchValue?.trim().length) return;
+
+    handleSearch(searchValue);
+  }, [searchValue]);
+
+  //fetch all data
   useEffect(() => {
     const fetchCards = async () => {
       try {
@@ -48,7 +76,6 @@ const CardGrid = () => {
     fetchCards();
   }, []);
 
-  if (loading) return <Box sx={{ textAlign: "center", py: 4 }}>Loading...</Box>;
   if (error)
     return (
       <Box sx={{ textAlign: "center", py: 4, color: "error.main" }}>
@@ -58,6 +85,12 @@ const CardGrid = () => {
 
   return (
     <MainContainer sx={{ py: 10 }}>
+      {loading && (
+        <Stack className="center">
+          <Typography fontWeight={500}>Loading...</Typography>
+        </Stack>
+      )}
+
       <Container gap={10}>
         {cards.map((card) => (
           <Card

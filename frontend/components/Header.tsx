@@ -47,12 +47,18 @@ const Header = () => {
 
   const handleSubmit = async () => {
     try {
+      const trimmedTitle = title.trim();
+      const trimmedDescription = description.trim();
+
       const response = await fetch("/api/cards", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, description }),
+        body: JSON.stringify({
+          title: trimmedTitle,
+          description: trimmedDescription,
+        }),
       });
 
       if (response.ok) {

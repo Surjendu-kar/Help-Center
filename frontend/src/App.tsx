@@ -1,6 +1,6 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import Header from "../components/Header";
 import Search from "../components/Search";
 import CardGrid from "../components/CardGrid";
@@ -16,14 +16,12 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box
-        sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
+      <Stack sx={{ minHeight: "100vh" }}>
         <Header />
         <Search />
         <CardGrid />
         <Footer />
-      </Box>
+      </Stack>
     </ThemeProvider>
   );
 };
