@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 import { DB_NAME } from "../constants.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const connectDB = async () => {
   try {
-    const connectionString = "mongodb+srv://rahulkar9988:rahulkar@cluster0.h55tn.mongodb.net/Card";
+    const connectionString = `${process.env.MONGODB_URI}${DB_NAME}`;
     console.log("Attempting to connect with:", connectionString);
 
     const connectionInstance = await mongoose.connect(connectionString);

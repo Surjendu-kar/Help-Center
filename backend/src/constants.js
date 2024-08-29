@@ -1,1 +1,1 @@
-export const DB_NAME = "Card"
+export const DB_NAME = "/Card"
