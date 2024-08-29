@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Stack, styled, Typography } from "@mui/material";
 import Card from "./Card";
 import { useSearchParams } from "react-router-dom";
+import { Params } from "../enum";
 
 const MainContainer = styled(Stack)(({ theme }) => ({
   alignItems: "center",
@@ -29,54 +30,43 @@ const CardGrid = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
-  const searchValue = searchParams.get("search");
+  const searchValue = searchParams.get(Params.SearchKey);
 
-  // handle search
-  const handleSearch = async (query: string) => {
+  //fetch all data
+  const fetchAllCards = async (query?: string) => {
+    // clear errors
+    setError(null);
+
     try {
-      setLoading(true);
-      const response = await fetch(`/api/cards/${query}`);
-      if (!response.ok) {
-        throw new Error("Card not found");
+      let baseEndPoint = "/api/cards";
+      if (query) {
+        baseEndPoint += `/${query}`;
       }
+
+      const response = await fetch(baseEndPoint);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
       const data = await response.json();
       setCards(data);
-    } catch (error) {
-      console.error("Error searching for card:", error);
+    } catch (err) {
+      setError("Failed to fetch cards");
       setCards([]);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  //fetch all data
-  const fetchAllCards = async () => {
-    try {
-      const response = await fetch("/api/cards");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setCards(data);
-      setLoading(false);
-    } catch (err) {
-      setError("Failed to fetch cards");
-      setLoading(false);
-      throw err;
-    }
-  };
-
   useEffect(() => {
-    if (searchValue) {
-      handleSearch(searchValue);
+    if (searchValue?.trim().length) {
+      fetchAllCards(searchValue);
     } else {
       fetchAllCards();
     }
   }, [searchValue]);
-
-  useEffect(() => {
-    fetchAllCards();
-  }, []);
 
   return (
     <MainContainer sx={{ py: 10 }}>
@@ -85,11 +75,13 @@ const CardGrid = () => {
           <Typography fontWeight={500}>Loading...</Typography>
         </Stack>
       )}
+
       {error && (
         <Stack className="center">
           <Typography fontWeight={500}>{error}</Typography>
         </Stack>
       )}
+
       <Container gap={10}>
         {cards.map((card) => (
           <Card

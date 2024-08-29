@@ -2,16 +2,17 @@ import { Stack, styled, Typography } from "@mui/material";
 
 const MainContainer = styled(Stack)(({ theme }) => ({
   width: "450px",
-  height: "200px",
-  background: "white",
+  height: "180px",
+  background: "#f5faff",
   borderRadius: "10px",
   border: "1px solid grey",
   boxShadow: theme.shadows[1],
 }));
 
 const StyledTitle = styled(Typography)(({ theme }) => ({
-  fontSize: "24px",
+  fontSize: "20px",
   marginTop: "1rem",
+  fontWeight: "bold",
   padding: theme.spacing(0, 3),
 }));
 const StyledHr = styled("hr")(({ theme }) => ({
