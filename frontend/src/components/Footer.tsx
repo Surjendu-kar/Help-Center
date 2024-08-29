@@ -22,6 +22,13 @@ const Heading = styled(Typography)(() => ({
 const TextStyle = styled(Typography)(() => ({
   fontSize: "0.9rem",
 }));
+const DotIndicator = styled(Box)(() => ({
+  width: 24,
+  height: 24,
+  background: "white",
+  borderRadius: "35%",
+  marginBottom: "0.5rem",
+}));
 
 const Footer = () => {
   return (
@@ -59,7 +66,8 @@ const Footer = () => {
         </Container>
       </Container>
 
-      <Container>
+      <Container sx={{ justifyContent: "flex-end" }}>
+        <DotIndicator />
         <TextStyle variant="body2">© Copyright 2022</TextStyle>
         <TextStyle variant="body2">Abstract Studio Design, Inc.</TextStyle>
         <TextStyle variant="body2">All rights reserved</TextStyle>
