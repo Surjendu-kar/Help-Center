@@ -46,7 +46,8 @@ const RequestDialog: React.FC<RequestDialogProps> = ({ open, onClose }) => {
       return;
     }
     try {
-      const response = await fetch("/api/cards", {
+      const baseEndPoint = `${import.meta.env.VITE_BE_URL}/api/cards`;
+      const response = await fetch(baseEndPoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
