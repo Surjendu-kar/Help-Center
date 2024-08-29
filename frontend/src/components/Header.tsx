@@ -31,7 +31,7 @@ const DotIndicator = styled(Box)(() => ({
   borderRadius: "50%",
 }));
 
-const Header: React.FC = () => {
+const Header = () => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
