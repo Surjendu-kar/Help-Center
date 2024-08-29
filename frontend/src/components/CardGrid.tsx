@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box, Stack, styled, Typography } from "@mui/material";
 import Card from "./Card";
 import { useSearchParams } from "react-router-dom";
