@@ -38,7 +38,7 @@ const CardGrid = () => {
     setError(null);
 
     try {
-      let baseEndPoint = "/api/cards";
+      let baseEndPoint = `${import.meta.env.VITE_BE_URL}/api/cards`;
       if (query) {
         baseEndPoint += `/${query}`;
       }
