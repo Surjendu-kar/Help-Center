@@ -10,7 +10,7 @@ app.use(cors());
 app.use("/api/cards", cardRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the Card API");
+  res.redirect(process.env.FE_URL);
 });
 
 export { app };
